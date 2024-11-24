@@ -7,7 +7,7 @@ data class Comet(
     val id: CometId = CometId(UUID.randomUUID().toString()),
     val core: Core,
     val coma: Coma,
-    val tails: Map<UserId, List<Tail>>,
+    val tails: Map<UserId.ObserverId, List<Tail>>,
 )
 
 @JvmInline

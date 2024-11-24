@@ -5,7 +5,7 @@ import java.util.*
 
 data class Core(
     val id: CoreId = CoreId(UUID.randomUUID().toString()),
-    val userId: UserId,
+    val userId: UserId.OwnerId,
     val content: Content,
 )
 
