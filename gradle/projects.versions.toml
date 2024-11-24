@@ -1,0 +1,3 @@
+[plugins]
+# Ktlint
+ktlint = { id = "com.wsr.ktlint", version = "unspecified" }
