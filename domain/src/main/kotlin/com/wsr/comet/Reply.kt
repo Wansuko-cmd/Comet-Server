@@ -1,4 +1,6 @@
-package com.wsr
+package com.wsr.comet
+
+import com.wsr.UserId
 
 class Replies(
     val subjectId: SubjectId,
@@ -9,7 +11,7 @@ class Replies(
 class Reply(
     val id: ReplyId,
     val posterType: PosterType,
-    val content: ReplyContent,
+    val content: Content,
 )
 
 @JvmInline
@@ -19,6 +21,3 @@ sealed interface PosterType {
     data object Owner : PosterType
     data object Observer : PosterType
 }
-
-@JvmInline
-value class ReplyContent(val value: String)
