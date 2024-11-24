@@ -2,13 +2,13 @@ package com.wsr.comet
 
 import com.wsr.UserId
 
-class Replies(
+data class Replies(
     val subjectId: SubjectId,
     val userId: UserId,
     val contents: List<Reply>,
 )
 
-class Reply(
+data class Reply(
     val id: ReplyId,
     val posterType: PosterType,
     val content: Content,

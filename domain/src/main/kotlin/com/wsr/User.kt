@@ -1,18 +1,9 @@
 package com.wsr
 
-import java.util.*
-
-class User private constructor(
+data class User(
     val id: UserId,
     val name: UserName,
-) {
-    companion object {
-        fun create(name: UserName) = User(
-            id = UserId(UUID.randomUUID().toString()),
-            name = name,
-        )
-    }
-}
+)
 
 @JvmInline
 value class UserId(val value: String)
