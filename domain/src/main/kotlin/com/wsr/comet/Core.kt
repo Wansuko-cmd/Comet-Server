@@ -3,11 +3,11 @@ package com.wsr.comet
 import com.wsr.user.UserId
 import java.util.*
 
-data class Subject(
-    val id: SubjectId = SubjectId(UUID.randomUUID().toString()),
+data class Core(
+    val id: CoreId = CoreId(UUID.randomUUID().toString()),
     val userId: UserId,
     val content: Content,
 )
 
 @JvmInline
-value class SubjectId(val value: String)
+value class CoreId(val value: String)
