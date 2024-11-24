@@ -1,19 +1,11 @@
 package com.wsr.user
 
-sealed interface User {
-    val id: UserId
-    val name: UserName
+import java.util.*
 
-    data class Owner(
-        override val id: UserId.OwnerId,
-        override val name: UserName,
-    ) : User
-
-    data class Observer(
-        override val id: UserId.ObserverId,
-        override val name: UserName,
-    ) : User
-}
+data class User(
+    val id: UserId = UserId.OwnerId(UUID.randomUUID().toString()),
+    val name: UserName,
+)
 
 sealed interface UserId {
     val value: String
