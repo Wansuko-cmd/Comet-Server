@@ -5,7 +5,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class GetOwnedCometUseCase(
+class GetOwnedCometsUseCase(
     private val repository: CometRepository,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
