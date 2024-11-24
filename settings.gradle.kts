@@ -25,4 +25,5 @@ dependencyResolutionManagement {
 rootProject.name = "Comet"
 
 include(":lib")
+include(":domain")
 include(":utils")
