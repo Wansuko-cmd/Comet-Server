@@ -26,4 +26,5 @@ rootProject.name = "Comet"
 
 include(":lib")
 include(":domain")
+include(":usecase")
 include(":utils")
