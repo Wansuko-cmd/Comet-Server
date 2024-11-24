@@ -12,7 +12,7 @@ class GetOwnedCometUseCase(
     suspend operator fun invoke(
         ownerId: UserId.OwnerId,
         page: Int = 0,
-    ): List<Comet> = withContext(dispatcher) {
+    ): List<Comet.Owned> = withContext(dispatcher) {
         repository.getOwnedComets(
             ownerId = ownerId,
             offset = page,

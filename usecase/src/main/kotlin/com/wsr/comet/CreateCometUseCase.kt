@@ -9,8 +9,11 @@ class CreateCometUseCase(
     private val repository: CometRepository,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
-    suspend operator fun invoke(ownerId: UserId.OwnerId, content: Content) = withContext(dispatcher) {
-        val comet = Comet(
+    suspend operator fun invoke(
+        ownerId: UserId.OwnerId,
+        content: Content,
+    ) = withContext(dispatcher) {
+        val comet = Comet.create(
             ownerId = ownerId,
             core = Core(content = content),
         )
