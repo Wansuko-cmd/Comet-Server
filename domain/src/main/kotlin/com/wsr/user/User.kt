@@ -1,4 +1,4 @@
-package com.wsr
+package com.wsr.user
 
 data class User(
     val id: UserId,

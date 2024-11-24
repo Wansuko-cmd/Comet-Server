@@ -1,7 +1,6 @@
 package com.wsr.comet
 
-import com.wsr.UserId
-import java.util.*
+import com.wsr.user.UserId
 
 data class Subject(
     val id: SubjectId,

@@ -1,8 +1,8 @@
 package com.wsr.comet
 
-import com.wsr.UserId
+import com.wsr.user.UserId
 
-data class Replies(
+data class ReplyList(
     val subjectId: SubjectId,
     val userId: UserId,
     val contents: List<Reply>,
