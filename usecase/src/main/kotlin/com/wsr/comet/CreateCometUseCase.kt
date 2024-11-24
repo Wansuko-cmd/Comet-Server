@@ -13,7 +13,7 @@ class CreateCometUseCase(
         ownerId: UserId.OwnerId,
         content: Content,
     ) = withContext(dispatcher) {
-        val comet = Comet.create(
+        val comet = Comet.Owned.create(
             ownerId = ownerId,
             core = Core(content = content),
         )

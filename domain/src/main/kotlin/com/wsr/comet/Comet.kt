@@ -8,27 +8,66 @@ sealed interface Comet {
     val ownerId: UserId.OwnerId
     val core: Core
     val coma: Coma?
+    val tails: List<Tail>
 
     data class Owned(
-        override val id: CometId = CometId(UUID.randomUUID().toString()),
+        override val id: CometId,
         override val ownerId: UserId.OwnerId,
         override val core: Core,
-        override val coma: Coma? = null,
-        val tails: List<Tail> = emptyList(),
-    ) : Comet
+        override val coma: Coma?,
+        override val tails: List<Tail>,
+    ) : Comet {
+        companion object {
+            fun create(ownerId: UserId.OwnerId, core: Core) = Owned(
+                id = CometId(UUID.randomUUID().toString()),
+                ownerId = ownerId,
+                core = core,
+                coma = null,
+                tails = emptyList(),
+            )
+
+            fun reconstruct(
+                id: CometId,
+                ownerId: UserId.OwnerId,
+                core: Core,
+                coma: Coma?,
+                tails: List<Tail>,
+            ) = Owned(
+                id = id,
+                ownerId = ownerId,
+                core = core,
+                coma = coma,
+                tails = tails,
+            )
+        }
+    }
 
     data class Observable(
-        override val id: CometId = CometId(UUID.randomUUID().toString()),
+        override val id: CometId,
         override val ownerId: UserId.OwnerId,
         override val core: Core,
-        override val coma: Coma? = null,
-    ) : Comet
+        override val coma: Coma?,
+        override val tails: List<Tail>,
+    ) : Comet {
+        init {
+            require(tails.size <= 1)
+        }
 
-    companion object {
-        fun create(ownerId: UserId.OwnerId, core: Core) = Owned(
-            ownerId = ownerId,
-            core = core,
-        )
+        companion object {
+            fun reconstruct(
+                id: CometId,
+                ownerId: UserId.OwnerId,
+                core: Core,
+                coma: Coma?,
+                tail: Tail?,
+            ) = Observable(
+                id = id,
+                ownerId = ownerId,
+                core = core,
+                coma = coma,
+                tails = listOfNotNull(tail),
+            )
+        }
     }
 }
 
