@@ -16,4 +16,6 @@ interface CometRepository {
         offset: Int,
         limit: Int = LIMIT_LATE,
     ): List<Comet>
+
+    suspend fun createComet(comet: Comet)
 }
