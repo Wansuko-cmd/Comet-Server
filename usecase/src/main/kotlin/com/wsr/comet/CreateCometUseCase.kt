@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class CreateCometUseCase(
-    private val repository: CometRepository,
+    private val cometRepository: CometRepository,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
     suspend operator fun invoke(
@@ -17,6 +17,6 @@ class CreateCometUseCase(
             ownerId = ownerId,
             core = Core(content = content),
         )
-        repository.createComet(comet)
+        cometRepository.createComet(comet)
     }
 }
