@@ -1,7 +1,7 @@
 package com.wsr.comet
 
 import com.wsr.user.UserId
-import java.util.*
+import java.util.UUID
 
 sealed interface Comet {
     val id: CometId
@@ -18,7 +18,10 @@ sealed interface Comet {
         override val tails: List<Tail>,
     ) : Comet {
         companion object {
-            fun create(ownerId: UserId.OwnerId, core: Core) = Owned(
+            fun create(
+                ownerId: UserId.OwnerId,
+                core: Core,
+            ) = Owned(
                 id = CometId(UUID.randomUUID().toString()),
                 ownerId = ownerId,
                 core = core,
@@ -72,4 +75,6 @@ sealed interface Comet {
 }
 
 @JvmInline
-value class CometId(val value: String)
+value class CometId(
+    val value: String,
+)

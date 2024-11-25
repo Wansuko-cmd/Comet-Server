@@ -12,7 +12,8 @@ class GetUserUseCase(
     suspend operator fun invoke(userId: UserId): ApiResult<User, GetUserError> =
         withContext(dispatcher) {
             try {
-                userRepository.getUser(userId)
+                userRepository
+                    .getUser(userId)
                     .let { ApiResult.Success(it) }
             } catch (_: Exception) {
                 ApiResult.Failure(GetUserError.InternalServerError)

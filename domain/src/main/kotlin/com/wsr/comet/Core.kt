@@ -1,6 +1,6 @@
 package com.wsr.comet
 
-import java.util.*
+import java.util.UUID
 
 data class Core(
     val id: CoreId = CoreId(UUID.randomUUID().toString()),
@@ -8,4 +8,6 @@ data class Core(
 )
 
 @JvmInline
-value class CoreId(val value: String)
+value class CoreId(
+    val value: String,
+)

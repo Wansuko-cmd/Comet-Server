@@ -13,18 +13,20 @@ class CreateCometUseCase(
     suspend operator fun invoke(
         ownerId: UserId.OwnerId,
         content: Content,
-    ): ApiResult<Unit, CreateCometError> = withContext(dispatcher) {
-        try {
-            val comet = Comet.Owned.create(
-                ownerId = ownerId,
-                core = Core(content = content),
-            )
-            cometRepository.createComet(comet)
-            ApiResult.Success(Unit)
-        } catch (_: Exception) {
-            ApiResult.Failure(CreateCometError.InternalServerError)
+    ): ApiResult<Unit, CreateCometError> =
+        withContext(dispatcher) {
+            try {
+                val comet =
+                    Comet.Owned.create(
+                        ownerId = ownerId,
+                        core = Core(content = content),
+                    )
+                cometRepository.createComet(comet)
+                ApiResult.Success(Unit)
+            } catch (_: Exception) {
+                ApiResult.Failure(CreateCometError.InternalServerError)
+            }
         }
-    }
 }
 
 sealed interface CreateCometError {

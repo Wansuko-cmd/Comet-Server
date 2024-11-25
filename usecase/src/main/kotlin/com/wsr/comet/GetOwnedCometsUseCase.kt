@@ -20,23 +20,25 @@ class GetOwnedCometsUseCase(
     ): ApiResult<List<GetOwnedComet>, GetOwnedCometsError> =
         withContext(dispatcher) {
             try {
-                val ownedComets = async {
-                    cometRepository.getOwnedComets(
-                        ownerId = ownerId,
-                        offset = page,
-                    )
-                }
+                val ownedComets =
+                    async {
+                        cometRepository.getOwnedComets(
+                            ownerId = ownerId,
+                            offset = page,
+                        )
+                    }
                 val ownedUser = async { userRepository.getUser(ownerId) }.await()
-                ownedComets.await().map { ownedComet ->
-                    GetOwnedComet(
-                        id = ownedComet.id,
-                        ownerUser = ownedUser,
-                        core = ownedComet.core,
-                        coma = ownedComet.coma,
-                        tails = ownedComet.tails,
-                    )
-                }
-                    .let { ApiResult.Success(it) }
+                ownedComets
+                    .await()
+                    .map { ownedComet ->
+                        GetOwnedComet(
+                            id = ownedComet.id,
+                            ownerUser = ownedUser,
+                            core = ownedComet.core,
+                            coma = ownedComet.coma,
+                            tails = ownedComet.tails,
+                        )
+                    }.let { ApiResult.Success(it) }
             } catch (_: Exception) {
                 ApiResult.Failure(GetOwnedCometsError.InternalServerError)
             }

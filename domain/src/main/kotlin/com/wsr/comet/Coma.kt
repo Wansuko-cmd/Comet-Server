@@ -1,6 +1,6 @@
 package com.wsr.comet
 
-import java.util.*
+import java.util.UUID
 
 data class Coma(
     val id: ComaId = ComaId(UUID.randomUUID().toString()),
@@ -8,4 +8,6 @@ data class Coma(
 )
 
 @JvmInline
-value class ComaId(val value: String)
+value class ComaId(
+    val value: String,
+)

@@ -7,11 +7,19 @@ class FakeCometRepositoryImpl : CometRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getComets(ownerId: UserId.OwnerId, offset: Int, limit: Int): List<Comet> {
+    override suspend fun getComets(
+        ownerId: UserId.OwnerId,
+        offset: Int,
+        limit: Int,
+    ): List<Comet> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getOwnedComets(ownerId: UserId.OwnerId, offset: Int, limit: Int): List<Comet.Owned> {
+    override suspend fun getOwnedComets(
+        ownerId: UserId.OwnerId,
+        offset: Int,
+        limit: Int,
+    ): List<Comet.Owned> {
         TODO("Not yet implemented")
     }
 

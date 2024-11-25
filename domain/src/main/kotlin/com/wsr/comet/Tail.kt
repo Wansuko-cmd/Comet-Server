@@ -1,7 +1,7 @@
 package com.wsr.comet
 
 import com.wsr.user.UserId
-import java.util.*
+import java.util.UUID
 
 data class Tail(
     val tailId: TailId,
@@ -16,12 +16,17 @@ data class Dust(
 )
 
 @JvmInline
-value class TailId(val value: String)
+value class TailId(
+    val value: String,
+)
 
 @JvmInline
-value class DustId(val value: String)
+value class DustId(
+    val value: String,
+)
 
 sealed interface Position {
     data object Owner : Position
+
     data object Observer : Position
 }
