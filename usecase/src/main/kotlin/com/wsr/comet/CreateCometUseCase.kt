@@ -1,5 +1,6 @@
 package com.wsr.comet
 
+import com.wsr.ApiResult
 import com.wsr.user.UserId
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -12,11 +13,20 @@ class CreateCometUseCase(
     suspend operator fun invoke(
         ownerId: UserId.OwnerId,
         content: Content,
-    ) = withContext(dispatcher) {
-        val comet = Comet.Owned.create(
-            ownerId = ownerId,
-            core = Core(content = content),
-        )
-        cometRepository.createComet(comet)
+    ): ApiResult<Unit, CreateCometError> = withContext(dispatcher) {
+        try {
+            val comet = Comet.Owned.create(
+                ownerId = ownerId,
+                core = Core(content = content),
+            )
+            cometRepository.createComet(comet)
+            ApiResult.Success(Unit)
+        } catch (_: Exception) {
+            ApiResult.Failure(CreateCometError.InternalServerError)
+        }
     }
+}
+
+sealed interface CreateCometError {
+    data object InternalServerError : CreateCometError
 }

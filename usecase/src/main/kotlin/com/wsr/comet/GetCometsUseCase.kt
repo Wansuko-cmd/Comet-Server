@@ -1,5 +1,6 @@
 package com.wsr.comet
 
+import com.wsr.ApiResult
 import com.wsr.user.User
 import com.wsr.user.UserId
 import com.wsr.user.UserRepository
@@ -14,23 +15,29 @@ class GetCometsUseCase(
 ) {
     suspend operator fun invoke(
         ownerId: UserId.OwnerId,
-        page: Int,
-    ): List<GetComet> = withContext(dispatcher) {
-        val comets = cometRepository.getComets(
-            ownerId = ownerId,
-            offset = page,
-        )
-        val users = userRepository.getUsers(ids = comets.map { it.ownerId })
-        comets.map { comet ->
-            GetComet(
-                id = comet.id,
-                ownerUser = users.first { it.id == comet.ownerId },
-                core = comet.core,
-                coma = comet.coma,
-                tails = comet.tails,
-            )
+        page: Int = 0,
+    ): ApiResult<List<GetComet>, GetCometsError> =
+        withContext(dispatcher) {
+            try {
+                val comets = cometRepository.getComets(
+                    ownerId = ownerId,
+                    offset = page,
+                )
+                val users = userRepository.getUsers(ids = comets.map { it.ownerId })
+                comets.map { comet ->
+                    GetComet(
+                        id = comet.id,
+                        ownerUser = users.first { it.id == comet.ownerId },
+                        core = comet.core,
+                        coma = comet.coma,
+                        tails = comet.tails,
+                    )
+                }
+                    .let { ApiResult.Success(it) }
+            } catch (_: Exception) {
+                ApiResult.Failure(GetCometsError.InternalServerError)
+            }
         }
-    }
 }
 
 data class GetComet(
@@ -40,3 +47,7 @@ data class GetComet(
     val coma: Coma?,
     val tails: List<Tail>,
 )
+
+sealed interface GetCometsError {
+    data object InternalServerError : GetCometsError
+}
