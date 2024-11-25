@@ -16,7 +16,7 @@ class GetCometsUseCase(
     suspend operator fun invoke(
         ownerId: UserId.OwnerId,
         page: Int = 0,
-    ): ApiResult<List<GetComet>, GetCometsError> =
+    ): ApiResult<List<GetOwnedComet>, GetCometsError> =
         withContext(dispatcher) {
             try {
                 val comets =
@@ -27,7 +27,7 @@ class GetCometsUseCase(
                 val users = userRepository.getUsers(ids = comets.map { it.ownerId })
                 comets
                     .map { comet ->
-                        GetComet(
+                        GetOwnedComet(
                             id = comet.id,
                             ownerUser = users.first { it.id == comet.ownerId },
                             core = comet.core,
@@ -41,7 +41,7 @@ class GetCometsUseCase(
         }
 }
 
-data class GetComet(
+data class GetOwnedComet(
     val id: CometId,
     val ownerUser: User,
     val core: Core,

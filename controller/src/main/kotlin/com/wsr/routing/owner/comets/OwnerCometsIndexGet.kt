@@ -1,10 +1,10 @@
-package com.wsr.routing.comets
+package com.wsr.routing.owner.comets
 
 import com.wsr.comet.Coma
 import com.wsr.comet.Core
 import com.wsr.comet.Dust
-import com.wsr.comet.GetCometsUseCase
 import com.wsr.comet.GetOwnedComet
+import com.wsr.comet.GetOwnedCometsUseCase
 import com.wsr.comet.Position
 import com.wsr.comet.Tail
 import com.wsr.mapBoth
@@ -18,18 +18,22 @@ import io.ktor.util.reflect.TypeInfo
 import kotlinx.serialization.Serializable
 import org.koin.ktor.ext.inject
 
-fun Route.cometsIndexGet() {
-    val getCometsUseCase: GetCometsUseCase by inject()
+fun Route.ownerCometsIndexGet() {
+    val getOwnedCometsUseCase: GetOwnedCometsUseCase by inject()
 
     get("") {
         call
-            .getRequest<CometsIndexGetRequest>()
-            .let { (ownerId, page) -> getCometsUseCase(ownerId = UserId.OwnerId(ownerId), page = page) }
-            .mapBoth(
+            .getRequest<OwnerCometsIndexGetRequest>()
+            .let { (ownerId, page) ->
+                getOwnedCometsUseCase(
+                    ownerId = UserId.OwnerId(ownerId),
+                    page = page,
+                )
+            }.mapBoth(
                 success = { comets ->
                     call.respond(
-                        message = CometsIndexGetResponse.from(comets),
-                        typeInfo = TypeInfo(CometsIndexGetResponse::class),
+                        message = OwnerCometsIndexGetResponse.from(comets),
+                        typeInfo = TypeInfo(OwnerCometsIndexGetResponse::class),
                     )
                 },
                 failure = {
@@ -43,33 +47,33 @@ fun Route.cometsIndexGet() {
 }
 
 @Serializable
-private data class CometsIndexGetRequest(
+private data class OwnerCometsIndexGetRequest(
     val ownerId: String,
     val page: Int = 0,
 )
 
 @Serializable
-private data class CometsIndexGetResponse(
-    val comets: List<ResponseComet>,
+private data class OwnerCometsIndexGetResponse(
+    val comets: List<ResponseOwnedComet>,
 ) {
     companion object {
-        fun from(comets: List<GetOwnedComet>) = comets.map { comet -> ResponseComet.from(comet) }
+        fun from(comets: List<GetOwnedComet>) = comets.map { comet -> ResponseOwnedComet.from(comet) }
     }
 }
 
 @Serializable
-private data class ResponseComet(
+private data class ResponseOwnedComet(
     val id: String,
-    val ownerUser: ResponseUser,
+    val ownerUser: ResponseOwnerUser,
     val core: ResponseCore,
     val coma: ResponseComa?,
     val tails: List<ResponseTail>,
 ) {
     companion object {
-        fun from(comet: GetOwnedComet): ResponseComet =
-            ResponseComet(
+        fun from(comet: GetOwnedComet): ResponseOwnedComet =
+            ResponseOwnedComet(
                 id = comet.id.value,
-                ownerUser = ResponseUser.from(comet.ownerUser),
+                ownerUser = ResponseOwnerUser.from(comet.ownerUser),
                 core = ResponseCore.from(comet.core),
                 coma = ResponseComa.from(comet.coma),
                 tails = comet.tails.map { ResponseTail.from(it) },
@@ -78,13 +82,13 @@ private data class ResponseComet(
 }
 
 @Serializable
-private data class ResponseUser(
+private data class ResponseOwnerUser(
     val id: String,
     val name: String,
 ) {
     companion object {
         fun from(user: User) =
-            ResponseUser(
+            ResponseOwnerUser(
                 id = user.id.value,
                 name = user.name.value,
             )
