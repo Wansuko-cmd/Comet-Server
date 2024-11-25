@@ -5,21 +5,25 @@ import java.util.UUID
 
 sealed interface Comet {
     val id: CometId
-    val ownerId: UserId.OwnerId
+    val ownerId: UserId
     val core: Core
     val coma: Coma?
     val tails: List<Tail>
 
     data class Owned(
         override val id: CometId,
-        override val ownerId: UserId.OwnerId,
+        override val ownerId: UserId,
         override val core: Core,
         override val coma: Coma?,
         override val tails: List<Tail>,
     ) : Comet {
+        init {
+            require(tails.none { it.observerId == ownerId })
+        }
+
         companion object {
             fun create(
-                ownerId: UserId.OwnerId,
+                ownerId: UserId,
                 core: Core,
             ) = Owned(
                 id = CometId(UUID.randomUUID().toString()),
@@ -31,7 +35,7 @@ sealed interface Comet {
 
             fun reconstruct(
                 id: CometId,
-                ownerId: UserId.OwnerId,
+                ownerId: UserId,
                 core: Core,
                 coma: Coma?,
                 tails: List<Tail>,
@@ -47,19 +51,20 @@ sealed interface Comet {
 
     data class Observable(
         override val id: CometId,
-        override val ownerId: UserId.OwnerId,
+        override val ownerId: UserId,
         override val core: Core,
         override val coma: Coma?,
         override val tails: List<Tail>,
     ) : Comet {
         init {
             require(tails.size <= 1)
+            require(tails.none { it.observerId == ownerId })
         }
 
         companion object {
             fun reconstruct(
                 id: CometId,
-                ownerId: UserId.OwnerId,
+                ownerId: UserId,
                 core: Core,
                 coma: Coma?,
                 tail: Tail?,

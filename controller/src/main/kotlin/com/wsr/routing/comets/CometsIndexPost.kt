@@ -21,7 +21,7 @@ fun Route.cometsIndexPost() {
             .getRequest<CometsIndexPostRequest>()
             .let { (ownerId, content) ->
                 createCometUseCase(
-                    ownerId = UserId.OwnerId(ownerId),
+                    ownerId = UserId(ownerId),
                     content = Content.Text(content),
                 )
             }.mapBoth(

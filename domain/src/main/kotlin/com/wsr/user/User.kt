@@ -3,21 +3,14 @@ package com.wsr.user
 import java.util.UUID
 
 data class User(
-    val id: UserId = UserId.OwnerId(UUID.randomUUID().toString()),
+    val id: UserId = UserId(UUID.randomUUID().toString()),
     val name: UserName,
 )
 
-sealed interface UserId {
-    val value: String
-
-    data class OwnerId(
-        override val value: String,
-    ) : UserId
-
-    data class ObserverId(
-        override val value: String,
-    ) : UserId
-}
+@JvmInline
+value class UserId(
+    val value: String,
+)
 
 @JvmInline
 value class UserName(

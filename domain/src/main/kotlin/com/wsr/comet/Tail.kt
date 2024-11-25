@@ -5,7 +5,7 @@ import java.util.UUID
 
 data class Tail(
     val id: TailId,
-    val observerId: UserId.ObserverId,
+    val observerId: UserId,
     val dusts: List<Dust>,
 )
 

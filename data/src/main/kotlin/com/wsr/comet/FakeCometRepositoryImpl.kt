@@ -8,7 +8,7 @@ class FakeCometRepositoryImpl : CometRepository {
     }
 
     override suspend fun getComets(
-        ownerId: UserId.OwnerId,
+        ownerId: UserId,
         offset: Int,
         limit: Int,
     ): List<Comet> {
@@ -16,7 +16,7 @@ class FakeCometRepositoryImpl : CometRepository {
     }
 
     override suspend fun getOwnedComets(
-        ownerId: UserId.OwnerId,
+        ownerId: UserId,
         offset: Int,
         limit: Int,
     ): List<Comet.Owned> {

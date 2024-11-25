@@ -19,7 +19,7 @@ fun Route.ownerUsersIndexGet() {
     get("") {
         call
             .getRequest<OwnerUsersIndexGetRequest>()
-            .let { (ownerId) -> getUserUseCase(UserId.OwnerId(ownerId)) }
+            .let { (ownerId) -> getUserUseCase(UserId(ownerId)) }
             .mapBoth(
                 success = { user ->
                     call.respond(

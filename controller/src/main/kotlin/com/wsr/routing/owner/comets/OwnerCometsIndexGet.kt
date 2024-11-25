@@ -27,7 +27,7 @@ fun Route.ownerCometsIndexGet() {
             .getRequest<OwnerCometsIndexGetRequest>()
             .let { (ownerId, page) ->
                 getOwnedCometsUseCase(
-                    ownerId = UserId.OwnerId(ownerId),
+                    ownerId = UserId(ownerId),
                     page = page,
                 )
             }.mapBoth(

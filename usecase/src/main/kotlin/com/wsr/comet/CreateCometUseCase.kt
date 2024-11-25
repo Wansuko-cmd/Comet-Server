@@ -11,7 +11,7 @@ class CreateCometUseCase(
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
     suspend operator fun invoke(
-        ownerId: UserId.OwnerId,
+        ownerId: UserId,
         content: Content,
     ): ApiResult<Unit, CreateCometError> =
         withContext(dispatcher) {

@@ -7,13 +7,13 @@ interface CometRepository {
     suspend fun getComet(id: CometId): Comet
 
     suspend fun getComets(
-        ownerId: UserId.OwnerId,
+        ownerId: UserId,
         offset: Int,
         limit: Int = LIMIT_LATE,
     ): List<Comet>
 
     suspend fun getOwnedComets(
-        ownerId: UserId.OwnerId,
+        ownerId: UserId,
         offset: Int,
         limit: Int = LIMIT_LATE,
     ): List<Comet.Owned>

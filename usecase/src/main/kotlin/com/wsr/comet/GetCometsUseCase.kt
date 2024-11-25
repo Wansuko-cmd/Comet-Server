@@ -14,7 +14,7 @@ class GetCometsUseCase(
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
     suspend operator fun invoke(
-        ownerId: UserId.OwnerId,
+        ownerId: UserId,
         page: Int = 0,
     ): ApiResult<List<GetComet>, GetCometsError> =
         withContext(dispatcher) {
