@@ -1,9 +1,9 @@
 package com.wsr.plugins
 
-import com.wsr.comet.CreateCometUseCase
-import com.wsr.comet.GetCometsUseCase
-import com.wsr.comet.GetOwnedCometsUseCase
+import com.wsr.comet.*
 import com.wsr.user.CreateUserUseCase
+import com.wsr.user.FakeUserRepositoryImpl
+import com.wsr.user.UserRepository
 import io.ktor.server.application.*
 import org.koin.dsl.module
 import org.koin.ktor.plugin.Koin
@@ -19,7 +19,13 @@ fun Application.configureKoinPlugin() {
         /*** User ***/
         factory<CreateUserUseCase> { CreateUserUseCase(get()) }
     }
-    val repository = module {}
+    val repository = module {
+        /*** Comet ***/
+        single<CometRepository> { FakeCometRepositoryImpl() }
+
+        /*** User ***/
+        single<UserRepository> { FakeUserRepositoryImpl() }
+    }
 
     install(Koin) { modules(usecase + repository) }
 }
