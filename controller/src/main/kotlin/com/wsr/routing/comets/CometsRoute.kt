@@ -4,7 +4,7 @@ import io.ktor.server.routing.Route
 import io.ktor.server.routing.route
 
 fun Route.cometsRoute() {
-    route("/comets") {
+    route("comets") {
         cometsIndexGet()
         cometsIndexPost()
     }

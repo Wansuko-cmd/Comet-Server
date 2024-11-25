@@ -6,8 +6,12 @@ import io.ktor.server.routing.Route
 import io.ktor.server.routing.route
 
 fun Route.ownerRoute() {
-    route("/owner") {
-        ownerCometsIndexGet()
-        ownerUsersIndexGet()
+    route("owner") {
+        route("comets") {
+            ownerCometsIndexGet()
+        }
+        route("users") {
+            ownerUsersIndexGet()
+        }
     }
 }
