@@ -2,6 +2,7 @@ package com.wsr.routing.owner.user
 
 import com.wsr.mapBoth
 import com.wsr.routing.getRequest
+import com.wsr.user.GetUserError
 import com.wsr.user.GetUserUseCase
 import com.wsr.user.User
 import com.wsr.user.UserId
@@ -26,11 +27,15 @@ fun Route.ownerUsersIndexGet() {
                         typeInfo = TypeInfo(Unit::class),
                     )
                 },
-                failure = {
-                    call.respond(
-                        message = HttpStatusCode.BadRequest,
-                        typeInfo = TypeInfo(Unit::class),
-                    )
+                failure = { error ->
+                    when (error) {
+                        GetUserError.InternalServerError -> {
+                            call.respond(
+                                message = HttpStatusCode.InternalServerError,
+                                typeInfo = TypeInfo(Unit::class),
+                            )
+                        }
+                    }
                 },
             )
     }

@@ -4,6 +4,7 @@ import com.wsr.comet.Coma
 import com.wsr.comet.Core
 import com.wsr.comet.Dust
 import com.wsr.comet.GetOwnedComet
+import com.wsr.comet.GetOwnedCometsError
 import com.wsr.comet.GetOwnedCometsUseCase
 import com.wsr.comet.Position
 import com.wsr.comet.Tail
@@ -36,11 +37,15 @@ fun Route.ownerCometsIndexGet() {
                         typeInfo = TypeInfo(OwnerCometsIndexGetResponse::class),
                     )
                 },
-                failure = {
-                    call.respond(
-                        message = HttpStatusCode.BadRequest,
-                        typeInfo = TypeInfo(Unit::class),
-                    )
+                failure = { error ->
+                    when (error) {
+                        GetOwnedCometsError.InternalServerError -> {
+                            call.respond(
+                                message = HttpStatusCode.InternalServerError,
+                                typeInfo = TypeInfo(Unit::class),
+                            )
+                        }
+                    }
                 },
             )
     }

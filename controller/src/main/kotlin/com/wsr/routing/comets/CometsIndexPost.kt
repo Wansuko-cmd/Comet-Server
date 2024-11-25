@@ -1,6 +1,7 @@
 package com.wsr.routing.comets
 
 import com.wsr.comet.Content
+import com.wsr.comet.CreateCometError
 import com.wsr.comet.CreateCometUseCase
 import com.wsr.mapBoth
 import com.wsr.routing.getRequest
@@ -30,11 +31,15 @@ fun Route.cometsIndexPost() {
                         typeInfo = TypeInfo(Unit::class),
                     )
                 },
-                failure = {
-                    call.respond(
-                        message = HttpStatusCode.BadRequest,
-                        typeInfo = TypeInfo(Unit::class),
-                    )
+                failure = { error ->
+                    when (error) {
+                        CreateCometError.InternalServerError -> {
+                            call.respond(
+                                message = HttpStatusCode.InternalServerError,
+                                typeInfo = TypeInfo(Unit::class),
+                            )
+                        }
+                    }
                 },
             )
     }

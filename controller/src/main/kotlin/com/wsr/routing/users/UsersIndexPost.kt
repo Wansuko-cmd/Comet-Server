@@ -2,6 +2,7 @@ package com.wsr.routing.users
 
 import com.wsr.mapBoth
 import com.wsr.routing.getRequest
+import com.wsr.user.CreateUserError
 import com.wsr.user.CreateUserUseCase
 import com.wsr.user.UserName
 import io.ktor.http.HttpStatusCode
@@ -19,8 +20,22 @@ fun Route.usersIndexPost() {
             .getRequest<UsersIndexPostRequest>()
             .let { (username) -> createUserUseCase(UserName(username)) }
             .mapBoth(
-                success = { call.respond(HttpStatusCode.OK, typeInfo = TypeInfo(Unit::class)) },
-                failure = { call.respond(HttpStatusCode.BadRequest, typeInfo = TypeInfo(Unit::class)) },
+                success = {
+                    call.respond(
+                        message = HttpStatusCode.OK,
+                        typeInfo = TypeInfo(Unit::class),
+                    )
+                },
+                failure = { error ->
+                    when (error) {
+                        CreateUserError.InternalServerError -> {
+                            call.respond(
+                                message = HttpStatusCode.InternalServerError,
+                                typeInfo = TypeInfo(Unit::class),
+                            )
+                        }
+                    }
+                },
             )
     }
 }

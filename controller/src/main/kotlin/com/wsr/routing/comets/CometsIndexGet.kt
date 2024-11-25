@@ -3,6 +3,7 @@ package com.wsr.routing.comets
 import com.wsr.comet.Coma
 import com.wsr.comet.Core
 import com.wsr.comet.Dust
+import com.wsr.comet.GetCometsError
 import com.wsr.comet.GetCometsUseCase
 import com.wsr.comet.GetOwnedComet
 import com.wsr.comet.Position
@@ -32,11 +33,15 @@ fun Route.cometsIndexGet() {
                         typeInfo = TypeInfo(CometsIndexGetResponse::class),
                     )
                 },
-                failure = {
-                    call.respond(
-                        message = HttpStatusCode.BadRequest,
-                        typeInfo = TypeInfo(Unit::class),
-                    )
+                failure = { error ->
+                    when (error) {
+                        GetCometsError.InternalServerError -> {
+                            call.respond(
+                                message = HttpStatusCode.InternalServerError,
+                                typeInfo = TypeInfo(Unit::class),
+                            )
+                        }
+                    }
                 },
             )
     }
