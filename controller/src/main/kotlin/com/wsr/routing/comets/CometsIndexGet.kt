@@ -25,7 +25,7 @@ fun Route.cometsIndexGet() {
     get("") {
         call
             .getRequest<CometsIndexGetRequest>()
-            .let { (ownerId, page) -> getCometsUseCase(ownerId = UserId(ownerId), page = page) }
+            .let { (ownerId, page) -> getCometsUseCase(userId = UserId(ownerId), page = page) }
             .mapBoth(
                 success = { comets ->
                     call.respond(
