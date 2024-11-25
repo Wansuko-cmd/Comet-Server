@@ -1,4 +1,4 @@
-package com.wsr.routing.user
+package com.wsr.routing.users
 
 import com.wsr.mapBoth
 import com.wsr.routing.getRequest
@@ -11,12 +11,12 @@ import io.ktor.util.reflect.TypeInfo
 import kotlinx.serialization.Serializable
 import org.koin.ktor.ext.inject
 
-fun Route.userIndexPost() {
+fun Route.usersIndexPost() {
     val createUserUseCase: CreateUserUseCase by inject()
 
     post("") {
         call
-            .getRequest<UserIndexPostRequest>()
+            .getRequest<UsersIndexPostRequest>()
             .let { (username) -> createUserUseCase(UserName(username)) }
             .mapBoth(
                 success = { call.respond(HttpStatusCode.OK, typeInfo = TypeInfo(Unit::class)) },
@@ -26,6 +26,6 @@ fun Route.userIndexPost() {
 }
 
 @Serializable
-private data class UserIndexPostRequest(
+private data class UsersIndexPostRequest(
     val username: String,
 )
