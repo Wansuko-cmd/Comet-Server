@@ -22,7 +22,7 @@ import org.koin.ktor.ext.inject
 fun Route.ownerCometsIndexGet() {
     val getOwnedCometsUseCase: GetOwnedCometsUseCase by inject()
 
-    get("") {
+    get {
         call
             .getRequest<OwnerCometsIndexGetRequest>()
             .let { (ownerId, page) ->

@@ -16,7 +16,7 @@ import org.koin.ktor.ext.inject
 fun Route.cometsIndexPost() {
     val createCometUseCase: CreateCometUseCase by inject()
 
-    get("") {
+    get {
         call
             .getRequest<CometsIndexPostRequest>()
             .let { (ownerId, content) ->

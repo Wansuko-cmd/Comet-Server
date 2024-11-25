@@ -16,7 +16,7 @@ import org.koin.ktor.ext.inject
 fun Route.ownerUsersIndexGet() {
     val getUserUseCase: GetUserUseCase by inject()
 
-    get("") {
+    get {
         call
             .getRequest<OwnerUsersIndexGetRequest>()
             .let { (ownerId) -> getUserUseCase(UserId(ownerId)) }

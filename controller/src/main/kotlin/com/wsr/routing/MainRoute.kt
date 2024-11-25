@@ -9,7 +9,9 @@ import io.ktor.server.routing.routing
 
 fun Application.mainRoute() {
     routing {
-        get("") { call.respond("Success", typeInfo = null) }
+        get {
+            call.respond("Success", typeInfo = null)
+        }
         ownerRoute()
         cometsRoute()
         usersRoute()

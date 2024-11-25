@@ -15,7 +15,7 @@ import org.koin.ktor.ext.inject
 fun Route.usersIndexPost() {
     val createUserUseCase: CreateUserUseCase by inject()
 
-    post("") {
+    post {
         call
             .getRequest<UsersIndexPostRequest>()
             .let { (username) -> createUserUseCase(UserName(username)) }
