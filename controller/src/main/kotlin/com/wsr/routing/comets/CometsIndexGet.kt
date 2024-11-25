@@ -3,9 +3,9 @@ package com.wsr.routing.comets
 import com.wsr.comet.Coma
 import com.wsr.comet.Core
 import com.wsr.comet.Dust
+import com.wsr.comet.GetComet
 import com.wsr.comet.GetCometsError
 import com.wsr.comet.GetCometsUseCase
-import com.wsr.comet.GetOwnedComet
 import com.wsr.comet.Position
 import com.wsr.comet.Tail
 import com.wsr.mapBoth
@@ -58,7 +58,7 @@ private data class CometsIndexGetResponse(
     val comets: List<ResponseComet>,
 ) {
     companion object {
-        fun from(comets: List<GetOwnedComet>) = comets.map { comet -> ResponseComet.from(comet) }
+        fun from(comets: List<GetComet>) = comets.map { comet -> ResponseComet.from(comet) }
     }
 }
 
@@ -71,7 +71,7 @@ private data class ResponseComet(
     val tails: List<ResponseTail>,
 ) {
     companion object {
-        fun from(comet: GetOwnedComet): ResponseComet =
+        fun from(comet: GetComet): ResponseComet =
             ResponseComet(
                 id = comet.id.value,
                 ownerUser = ResponseUser.from(comet.ownerUser),
