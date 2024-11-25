@@ -14,17 +14,19 @@ class GetCometsUseCase(
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
     suspend operator fun invoke(
-        ownerId: UserId,
+        userId: UserId,
         page: Int = 0,
     ): ApiResult<List<GetComet>, GetCometsError> =
         withContext(dispatcher) {
             try {
                 val comets =
-                    cometRepository.getComets(
-                        ownerId = ownerId,
-                        offset = page,
-                    )
+                    cometRepository
+                        .getComets(
+                            userId = userId,
+                            offset = page,
+                        ).map { comet -> comet.lookIn(observerId = userId) }
                 val users = userRepository.getUsers(ids = comets.map { it.ownerId })
+
                 comets
                     .map { comet ->
                         GetComet(

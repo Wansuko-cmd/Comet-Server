@@ -14,6 +14,12 @@ data class Comet(
         require(tails.none { it.observerId == ownerId })
         require(tails.distinct().size == tails.size)
     }
+
+    fun lookIn(observerId: UserId): Comet =
+        when {
+            observerId == ownerId -> this
+            else -> this.copy(tails = tails.filter { it.observerId == observerId })
+        }
 }
 
 @JvmInline

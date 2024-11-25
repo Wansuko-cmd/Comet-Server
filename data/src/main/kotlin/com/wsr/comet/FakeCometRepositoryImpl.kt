@@ -8,7 +8,7 @@ class FakeCometRepositoryImpl : CometRepository {
     }
 
     override suspend fun getComets(
-        ownerId: UserId,
+        userId: UserId,
         offset: Int,
         limit: Int,
     ): List<Comet> {
