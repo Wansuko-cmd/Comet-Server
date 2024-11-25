@@ -19,7 +19,7 @@ class FakeCometRepositoryImpl : CometRepository {
         ownerId: UserId,
         offset: Int,
         limit: Int,
-    ): List<Comet.Owned> {
+    ): List<Comet> {
         TODO("Not yet implemented")
     }
 

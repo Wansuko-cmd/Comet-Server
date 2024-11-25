@@ -16,7 +16,7 @@ interface CometRepository {
         ownerId: UserId,
         offset: Int,
         limit: Int = LIMIT_LATE,
-    ): List<Comet.Owned>
+    ): List<Comet>
 
     suspend fun createComet(comet: Comet)
 }
