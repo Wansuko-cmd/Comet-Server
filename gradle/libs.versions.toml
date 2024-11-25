@@ -4,6 +4,16 @@ kotlin = "2.0.21"
 coroutine = "1.9.0"
 datetime = "0.6.1"
 
+# Kotlin Serialization
+serialization = "1.7.3"
+
+# Ktor
+ktor = "3.0.1"
+logback = "1.5.12"
+
+# Koin
+koin = "4.1.0-Beta1"
+
 # Gradle
 gradle-ksp = "2.0.21-1.0.28"
 
@@ -12,6 +22,40 @@ gradle-ksp = "2.0.21-1.0.28"
 kotlin-coroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutine" }
 kotlin-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "datetime" }
 
+# Kotlin Serialization
+kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
+
+# Ktor
+ktor-core = { group = "io.ktor", name = "ktor-server-core-jvm" }
+ktor-netty = { group = "io.ktor", name = "ktor-server-netty-jvm" }
+ktor-yaml = { group = "io.ktor", name = "ktor-server-config-yaml" }
+ktor-cors = { group = "io.ktor", name = "ktor-server-cors" }
+ktor-serialization = { group = "io.ktor", name="ktor-serialization-kotlinx-json" }
+ktor-content-negotiation = { group = "io.ktor", name="ktor-server-content-negotiation" }
+ktor-logback = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback" }
+
+# Koin
+koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koin" }
+koin-core = { group = "io.insert-koin", name = "koin-core" }
+koin-ktor = { group = "io.insert-koin", name = "koin-ktor" }
+koin-logger = { group = "io.insert-koin", name = "koin-logger-slf4j" }
+
 # Gradle
 gradle-kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 gradle-ksp = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "gradle-ksp" }
+
+[bundles]
+ktor = [
+    "ktor-core",
+    "ktor-netty",
+    "ktor-yaml",
+    "ktor-cors",
+    "ktor-serialization",
+    "ktor-content-negotiation",
+    "ktor-logback",
+]
+koin = ["koin-core", "koin-ktor", "koin-logger"]
+
+[plugins]
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+ktor = { id = "io.ktor.plugin", version.ref = "ktor"}
