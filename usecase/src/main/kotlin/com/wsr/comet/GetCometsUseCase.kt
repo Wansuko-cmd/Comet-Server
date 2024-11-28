@@ -21,10 +21,8 @@ class GetCometsUseCase(
             try {
                 val comets =
                     cometRepository
-                        .getComets(
-                            userId = userId,
-                            offset = page,
-                        ).map { comet -> comet.lookIn(observerId = userId) }
+                        .getComets(offset = page)
+                        .map { comet -> comet.lookIn(observerId = userId) }
                 val users = userRepository.getUsers(ids = comets.map { it.ownerId })
 
                 comets
