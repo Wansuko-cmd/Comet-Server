@@ -12,7 +12,7 @@ ktor = "3.0.1"
 logback = "1.5.12"
 
 # Koin
-koin = "4.1.0-Beta1"
+koin = "4.1.0-Beta5"
 
 # Gradle
 gradle-ksp = "2.1.0-1.0.29"
